@@ -27,6 +27,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
+DokkyFlights/.angular/cache/
 /.angular/cache
 .sass-cache/
 /connect.lock
