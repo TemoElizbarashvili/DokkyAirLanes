@@ -89,10 +89,10 @@
 
                     <i class="fa fa-usd" aria-hidden="true">{{ flight.price }}</i>
                     <br />
-                    <a  class="btn btn-secondary btn-lg mt-2">
+                    <a [routerLink]="['/book-flight', flight.id]" class="btn btn-secondary btn-lg mt-2">
                         <i class="fa fa-ticket" aria-hidden="true">Book</i>
                     </a>
-                    </div>
+                    </div> 
                     <div class="col">
                     <div class="col m-2">
                         <i class="fa fa-plane text-primary" aria-hidden="true" style="font-size: 20px;"></i>
@@ -108,7 +108,7 @@
                         <i class="fa fa-clock-o" aria-hidden="true"></i>
                         {{ flight.arrival?.time | date: 'shortTime' }}
                     </div>
-                    </div>
+                </div>
 
             </div>
                 

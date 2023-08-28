@@ -7,18 +7,25 @@ import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { SearchFlightsComponent } from './search-flights/search-flights.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { HttpClientModule } from '@angular/common/http';
+import { BookFlightComponent } from './book-flight/book-flight.component';
+import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    SearchFlightsComponent
+    SearchFlightsComponent,
+    BookFlightComponent,
+    RegisterPassengerComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
-    HttpClientModule 
+    HttpClientModule ,
+    ReactiveFormsModule,
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
