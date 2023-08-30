@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     NavMenuComponent,
     SearchFlightsComponent,
     BookFlightComponent,
-    RegisterPassengerComponent
+    RegisterPassengerComponent,
+    MyBookingsComponent
   ],
   imports: [
     BrowserModule,

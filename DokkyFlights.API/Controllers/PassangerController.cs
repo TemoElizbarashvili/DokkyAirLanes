@@ -17,12 +17,11 @@ namespace DokkyFlights.API.Controllers
         public IActionResult Register(NewPassangerDto dto)
         {
             Passangers.Add(dto);
-            System.Diagnostics.Debug.WriteLine(Passangers.Count);
-            return CreatedAtAction(nameof(Find), new {email = dto.Email});
+            return Ok(dto);
         }
 
         [HttpGet("{email}")]
-        public ActionResult<PassangerRm> Find([FromRoute]string email)
+        public ActionResult<PassangerRm> Find(string email)
         {
             var passanger = Passangers.FirstOrDefault(p => p.Email == email);
             if (passanger == null)

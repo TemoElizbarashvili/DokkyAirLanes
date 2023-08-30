@@ -1,3 +1,4 @@
+using DokkyFlights.API.Dtos;
 using DokkyFlights.API.ReadModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -63,6 +64,7 @@ namespace DokkyFlights.API.Controllers
                 new TimePlaceRm("Zagreb",DateTime.Now.AddHours(random.Next(4, 60))),
                     random.Next(1, 853))
            };
+        static private IList<BookDto> Bookings = new List<BookDto>();
 
         public FlightController(ILogger<FlightController> logger)
         {
@@ -89,7 +91,25 @@ namespace DokkyFlights.API.Controllers
             
             return Ok(flight);
         }
-        
+
+        [HttpPost]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
+        public IActionResult Book(BookDto dto) 
+        {
+            var flight = flights.Any(f => f.Id == dto.FlightId);
+
+            if (!flight)
+                return NotFound();
+
+            Bookings.Add(dto);
+
+            return CreatedAtAction(nameof(Find), new { id = dto.FlightId });
+        }
+
+
 
 
     }
