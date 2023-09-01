@@ -1,6 +1,8 @@
-﻿using DokkyFlights.API.Dtos;
+﻿using DokkyFlights.API.Domain.Entities;
+using DokkyFlights.API.Dtos;
 using DokkyFlights.API.ReadModels;
 using Microsoft.AspNetCore.Mvc;
+using DokkyFlights.API.Data;
 
 namespace DokkyFlights.API.Controllers
 {
@@ -8,7 +10,13 @@ namespace DokkyFlights.API.Controllers
     [ApiController]
     public class PassangerController : ControllerBase
     {
-        static private IList<NewPassangerDto> Passangers = new List<NewPassangerDto>();
+        private readonly Entities _entities;
+
+        public PassangerController(Entities entities)
+        {
+            _entities = entities;
+        }
+
 
         [HttpPost]
         [ProducesResponseType(201)]
@@ -16,23 +24,25 @@ namespace DokkyFlights.API.Controllers
         [ProducesResponseType(500)]
         public IActionResult Register(NewPassangerDto dto)
         {
-            Passangers.Add(dto);
+            _entities.Passangers.Add(new Passenger(
+                dto.Email,
+                dto.FirstName,
+                dto.LastName,
+                dto.Gender));
+            _entities.SaveChanges();
             return Ok(dto);
         }
 
         [HttpGet("{email}")]
         public ActionResult<PassangerRm> Find(string email)
         {
-            var passanger = Passangers.FirstOrDefault(p => p.Email == email);
+            var passanger = _entities.Passangers.FirstOrDefault(p => p.Email == email);
             if (passanger == null)
                 return NotFound();
 
             var rm = new PassangerRm(passanger.Email, passanger.FirstName, passanger.LastName, passanger.Gender);
 
-            return Ok(rm);
-            
+            return Ok(rm); 
         }
-
-
     }
 }

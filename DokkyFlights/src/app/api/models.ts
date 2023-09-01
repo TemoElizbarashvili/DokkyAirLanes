@@ -1,6 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { BookDto } from './models/book-dto';
+export { BookingRm } from './models/booking-rm';
 export { FlightRm } from './models/flight-rm';
 export { NewPassangerDto } from './models/new-passanger-dto';
 export { PassangerRm } from './models/passanger-rm';
