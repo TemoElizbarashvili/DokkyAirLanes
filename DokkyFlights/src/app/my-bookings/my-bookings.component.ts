@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BookDto, BookingRm } from '../api/models';
 import { BookingService } from '../api/services';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-my-bookings',
@@ -12,12 +11,9 @@ import { Router } from '@angular/router';
 export class MyBookingsComponent implements OnInit {
   bookings: BookingRm[] = [];
 
-  constructor(private bookingService: BookingService, private authService: AuthService, private router: Router) { }
+  constructor(private bookingService: BookingService, private authService: AuthService) { }
 
   ngOnInit(): void {
-    if (!this.authService.currentUser?.email) {
-      this.router.navigate(['/register-passenger']);
-    }
     this.bookingService.listBooking({ email: this.authService.currentUser?.email?? '' })
       .subscribe(result => {
         this.bookings = result;

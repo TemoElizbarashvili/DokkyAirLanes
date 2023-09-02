@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { PassangerService } from '../api/services';
 import { AuthService } from '../auth/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-passenger',
@@ -18,12 +18,21 @@ export class RegisterPassengerComponent implements OnInit {
     lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])],
     isFemale: [true, Validators.required]
   })
+  requestedUrl?: string = undefined;
 
-  constructor(private passangerService: PassangerService, private fb: FormBuilder, private authService: AuthService, private router: Router) { }
+  constructor(private passangerService: PassangerService, private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    
+    this.activatedRoute.params.subscribe(p => {
+      this.requestedUrl = p['requestedUrl']
+    }, err => {
+      console.log(err);
+    }
+    );
   }
 
   checkPassanger() : void {
@@ -51,7 +60,7 @@ export class RegisterPassengerComponent implements OnInit {
 
   private login = () => {
     this.authService.loginUser({ email: this.form.get('email')?.value as string});
-    this.router.navigate(['/search-flights']);
+    this.router.navigate([this.requestedUrl ?? '/search-flights']);
   }
 
 }

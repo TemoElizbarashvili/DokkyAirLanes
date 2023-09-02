@@ -14,7 +14,9 @@ namespace DokkyFlights.API.Domain.Entities
 
         public IList<Booking> Bookings = new List<Booking>();
 
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         public Flight() { }
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
         public Flight(Guid id, string airline, string price, TimePlace departure,TimePlace arrival, int remainingNumberOfSeats)
         {

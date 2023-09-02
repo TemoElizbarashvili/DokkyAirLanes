@@ -28,9 +28,6 @@ export class BookFlightComponent implements OnInit {
     private fb: FormBuilder ) { }
 
   ngOnInit(): void {
-    if(!this.authService.currentUser)
-      this.router.navigate(['register-passenger']);
-
     this.route.paramMap.subscribe( params => {
       this.flindFlight(params.get("id"));
     })

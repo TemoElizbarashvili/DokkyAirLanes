@@ -8,16 +8,16 @@ var builder = WebApplication.CreateBuilder(args);
 // Add db Context
 
 builder.Services.AddDbContext<Entities>(options => 
-options.UseInMemoryDatabase(databaseName: "Flights"), 
-ServiceLifetime.Singleton);
+options.UseSqlServer(builder.Configuration.GetConnectionString("FlightsConnection")));
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(); 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen( c =>
 {
+    c.DescribeAllParametersInCamelCase();
     c.AddServer(new OpenApiServer
     {
         Description = "Development Server",
@@ -26,14 +26,19 @@ builder.Services.AddSwaggerGen( c =>
     c.CustomOperationIds(e => e.ActionDescriptor.RouteValues["action"] + e.ActionDescriptor.RouteValues["controller"]);
 });
 
-builder.Services.AddSingleton<Entities>();
+builder.Services.AddScoped<Entities>();
 
 var app = builder.Build();
 
 var entities = app.Services.CreateScope().ServiceProvider.GetService<Entities>();
+
+entities?.Database.EnsureCreated();
+
 var random = new Random();
 
-Flight[] flightsToSeed = new Flight[]
+if (!entities!.Flights.Any())
+{
+    Flight[] flightsToSeed = new Flight[]
 {
         new (   Guid.NewGuid(),
                 "Dokky Airlines",
@@ -84,9 +89,11 @@ Flight[] flightsToSeed = new Flight[]
                 new TimePlace("Zagreb",DateTime.Now.AddHours(random.Next(4, 60))),
                     random.Next(1, 853))
 };
-entities?.Flights.AddRange(flightsToSeed);
+    entities?.Flights.AddRange(flightsToSeed);
 
-entities?.SaveChanges();
+    entities?.SaveChanges();
+}
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

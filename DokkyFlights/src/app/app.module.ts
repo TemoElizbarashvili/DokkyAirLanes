@@ -11,6 +11,7 @@ import { BookFlightComponent } from './book-flight/book-flight.component';
 import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MyBookingsComponent } from './my-bookings/my-bookings.component';
+import { AuthGuard } from './auth/auth.guard';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
     ReactiveFormsModule,
     
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
